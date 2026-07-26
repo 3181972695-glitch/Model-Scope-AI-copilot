@@ -1,4 +1,4 @@
-import { Compass, Cpu, GitBranch, FileSearch, ArrowRight, Check } from 'lucide-react';
+import { Compass, Cpu, GitBranch, FileSearch, Activity, ArrowRight, Check } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface Feature {
@@ -63,6 +63,18 @@ const features: Feature[] = [
     iconBg: 'from-amber-500/20 to-amber-500/5',
     borderColor: 'border-amber-400/20',
   },
+  {
+    id: 'health',
+    step: '05',
+    icon: Activity,
+    title: '健康度诊断',
+    subtitle: 'Project Health Check',
+    description: '多维度评估开源项目健康度，覆盖贡献活跃度、Issue响应、文档质量、新人友好度，给出治理优化建议。',
+    highlights: ['4 维度评分', '治理建议', '社区标准对标'],
+    gradient: 'from-emerald-400 via-green-500 to-teal-600',
+    iconBg: 'from-emerald-500/20 to-emerald-500/5',
+    borderColor: 'border-emerald-400/20',
+  },
 ];
 
 interface Props {
@@ -80,7 +92,7 @@ export default function FeatureCards({ activeFeature, onSelect }: Props) {
             Core Features
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 tracking-tight">
-            四大核心功能
+            五大核心功能
           </h2>
           <p className="text-slate-400/80 max-w-xl mx-auto text-base leading-loose">
             每个功能都内置了智能 AI 助手，通过对话式交互为你提供个性化指导
@@ -88,7 +100,7 @@ export default function FeatureCards({ activeFeature, onSelect }: Props) {
         </div>
 
         {/* ── Cards grid: 3 cols desktop, 2 tablet, 1 mobile ── */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 stagger">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 stagger">
           {features.map((f) => {
             const isActive = activeFeature === f.id;
             return (
