@@ -7,6 +7,7 @@ class Mode(str, Enum):
     beginner = "beginner"
     model = "model"
     contribution = "contribution"
+    summary = "summary"
 
 
 class ChatRequest(BaseModel):
@@ -19,7 +20,7 @@ class ChatRequest(BaseModel):
     )
     mode: Mode = Field(
         ...,
-        description="对话模式：beginner（新手导航）| model（模型推荐）| contribution（贡献规划）",
+        description="对话模式：beginner（新手导航）| model（模型推荐）| contribution（贡献规划）| summary（议题摘要）",
     )
 
 
