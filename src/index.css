@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-accent: #06b6d4;
+  --color-surface: #0f172a;
+  --color-surface-2: #1e293b;
+  --color-surface-3: #334155;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 6rem; /* 96px — 防止 anchor 跳转时被 fixed navbar 遮挡 */
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #060b18;
+  color: #f1f5f9;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ── Keyframes ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.35); }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Utility classes ── */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+.typing-dot {
+  animation: blink 1.4s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Stagger children */
+.stagger > * {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+
+/* ── Background patterns ── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.bg-dots {
+  background-image: radial-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Unified page container ── */
+.container-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+@media (max-width: 768px) {
+  .container-main {
+    padding: 0 20px;
+  }
+}
+
+/* ── Navbar GPU optimisation ── */
+nav {
+  will-change: transform;
+}
+
+/* ── Unified section spacing ── */
+.section {
+  width: 100%;
+}
+/* Hero */
+.section-hero {
+  padding-top: 96px;    /* navbar clearance */
+  padding-bottom: 128px;
+}
+/* Feature cards */
+.section-features {
+  padding-top: 80px;
+  padding-bottom: 128px;
+}
+/* Chat demo */
+.section-demo {
+  padding-top: 128px;
+  padding-bottom: 128px;
+}
+/* AI disclosure */
+.section-disclosure {
+  padding-top: 112px;
+  padding-bottom: 128px;
+}
+@media (max-width: 768px) {
+  .section-hero       { padding-top: 80px; padding-bottom: 80px; }
+  .section-features    { padding-top: 60px; padding-bottom: 80px; }
+  .section-demo        { padding-top: 80px;  padding-bottom: 80px; }
+  .section-disclosure  { padding-top: 80px;  padding-bottom: 80px; }
+}
+
+/* ── Glass card ── */
+.glass {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Gradient text utility ── */
+.gradient-text {
+  background: linear-gradient(135deg, #818cf8, #22d3ee, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section divider ── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2), transparent);
+  border: none;
+}
+
+/* ── Markdown-style content in chat bubbles ── */
+.chat-content h1, .chat-content h2, .chat-content h3 {
+  color: #f1f5f9;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+.chat-content h3 { font-size: 0.95rem; }
+.chat-content p { margin: 0.35em 0; }
+.chat-content ul, .chat-content ol {
+  padding-left: 1.25em;
+  margin: 0.5em 0;
+}
+.chat-content li { margin: 0.25em 0; line-height: 1.7; }
+.chat-content strong { color: #c7d2fe; }
+.chat-content code {
+  background: rgba(99, 102, 241, 0.15);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.chat-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5em 0;
+  font-size: 0.8em;
+}
+.chat-content th {
+  background: rgba(99, 102, 241, 0.12);
+  padding: 0.4em 0.6em;
+  text-align: left;
+  font-weight: 600;
+}
+.chat-content td {
+  padding: 0.3em 0.6em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
