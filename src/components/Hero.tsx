@@ -1,28 +1,4 @@
 import { ArrowRight, Sparkles, ChevronDown, Bot, Cpu, GitBranch } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
-function CountUp({ end, suffix = '', duration = 1500 }: { end: number; suffix?: string; duration?: number }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let start = 0;
-    const step = (timestamp: number) => {
-      if (!start) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      setCount(Math.floor(progress * end));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [end, duration]);
-
-  return <>{count}{suffix}</>;
-}
-
-const STATS = [
-  { value: 30, suffix: '万+', label: '开源模型' },
-  { value: 10, suffix: '万+', label: '社区开发者' },
-  { value: 500, suffix: '+', label: '活跃组织' },
-];
 
 export default function Hero() {
   return (
@@ -100,16 +76,18 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* ── Stats ── */}
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl md:text-4xl font-extrabold text-white mb-3 tabular-nums tracking-tight">
-                <CountUp end={stat.value} suffix={stat.suffix} />
-              </div>
-              <div className="text-xs md:text-sm text-slate-500 group-hover:text-slate-400 transition-colors">
-                {stat.label}
-              </div>
+        {/* ── Community Value Dashboard ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-2xl mx-auto">
+          {[
+            { icon: '🧭', title: '新人入门', desc: '分阶段路径 + Good First Issue' },
+            { icon: '🧠', title: '项目落地', desc: '模型推荐 + 代码 + 创空间' },
+            { icon: '🚀', title: '社区贡献', desc: 'Issue 匹配 + PR 模板' },
+            { icon: '📋', title: '协作提效', desc: '议题摘要 + 决策辅助' },
+          ].map((item) => (
+            <div key={item.title} className="text-center group p-4 rounded-2xl border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] transition-all">
+              <div className="text-2xl mb-2">{item.icon}</div>
+              <div className="text-sm font-semibold text-white mb-1">{item.title}</div>
+              <div className="text-[11px] text-slate-500 leading-relaxed">{item.desc}</div>
             </div>
           ))}
         </div>

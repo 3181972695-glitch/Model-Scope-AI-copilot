@@ -1,4 +1,4 @@
-import { Compass, Cpu, GitBranch, ArrowRight, Check } from 'lucide-react';
+import { Compass, Cpu, GitBranch, FileSearch, ArrowRight, Check } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface Feature {
@@ -21,8 +21,8 @@ const features: Feature[] = [
     icon: Compass,
     title: '新手导航',
     subtitle: 'Beginner Onboarding',
-    description: '通过 AI 对话，了解 ModelScope 平台的核心功能、社区规范与最佳实践，从零开始成为开源社区活跃贡献者。',
-    highlights: ['平台功能引导', '学习路线规划', '社区规范解读'],
+    description: '降低新人入社门槛，按「模型体验→Notebook微调→发布创空间→社区贡献」全流程引导，提升社区留存率。',
+    highlights: ['模型体验入门', 'Notebook 工坊', '创空间发布'],
     gradient: 'from-indigo-500 via-indigo-600 to-purple-600',
     iconBg: 'from-indigo-500/20 to-indigo-500/5',
     borderColor: 'border-indigo-400/20',
@@ -33,8 +33,8 @@ const features: Feature[] = [
     icon: Cpu,
     title: '模型推荐',
     subtitle: 'Model Recommendation',
-    description: '根据任务需求和使用场景，智能推荐最合适的预训练模型、数据集和微调方案，让 AI 开发事半功倍。',
-    highlights: ['多领域覆盖', '参数对比分析', '一键在线体验'],
+    description: '加速项目落地，推荐模型同时提供推理代码、一键 Notebook 入口与创空间发布规范，推动成果反哺社区。',
+    highlights: ['官方卡片链接', '一键 Notebook', '创空间发布'],
     gradient: 'from-cyan-400 via-teal-400 to-emerald-500',
     iconBg: 'from-cyan-500/20 to-cyan-500/5',
     borderColor: 'border-cyan-400/20',
@@ -45,11 +45,23 @@ const features: Feature[] = [
     icon: GitBranch,
     title: '贡献规划',
     subtitle: 'Contribution Roadmap',
-    description: '基于技能与兴趣，生成个性化开源贡献路线图。从文档翻译到核心代码，每一步都有明确指引。',
-    highlights: ['文档 / 代码 / 运营', '分阶段路线图', 'Good First Issue'],
+    description: '降低贡献门槛，内置魔搭 Issue 标签体系与 PR 审核流程，输出匹配 Issue + PR 模板 + 提交校验清单。',
+    highlights: ['Issue 智能匹配', 'PR 模板生成', 'CLA 合规校验'],
     gradient: 'from-purple-400 via-violet-500 to-pink-500',
     iconBg: 'from-purple-500/20 to-purple-500/5',
     borderColor: 'border-purple-400/20',
+  },
+  {
+    id: 'summary',
+    step: '04',
+    icon: FileSearch,
+    title: '议题摘要',
+    subtitle: 'Issue Analyzer',
+    description: '压缩社区沟通成本，输入 Issue/讨论链接即可输出结构化摘要，帮助维护者快速定位核心诉求与待决策事项。',
+    highlights: ['核心诉求提炼', '环境信息提取', '待决策事项'],
+    gradient: 'from-amber-400 via-orange-400 to-yellow-500',
+    iconBg: 'from-amber-500/20 to-amber-500/5',
+    borderColor: 'border-amber-400/20',
   },
 ];
 
@@ -68,7 +80,7 @@ export default function FeatureCards({ activeFeature, onSelect }: Props) {
             Core Features
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 tracking-tight">
-            三大核心功能
+            四大核心功能
           </h2>
           <p className="text-slate-400/80 max-w-xl mx-auto text-base leading-loose">
             每个功能都内置了智能 AI 助手，通过对话式交互为你提供个性化指导
@@ -76,7 +88,7 @@ export default function FeatureCards({ activeFeature, onSelect }: Props) {
         </div>
 
         {/* ── Cards grid: 3 cols desktop, 2 tablet, 1 mobile ── */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 stagger">
           {features.map((f) => {
             const isActive = activeFeature === f.id;
             return (

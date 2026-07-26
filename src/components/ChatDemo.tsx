@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, ArrowLeft, Zap, MessageSquare } from 'lucide-react';
+import Feedback from './Feedback';
 
 interface Message { role: 'user' | 'assistant'; content: string; }
 
@@ -7,12 +8,21 @@ const MODE_MAP: Record<string, string> = {
   onboarding: 'beginner',
   recommend: 'model',
   contribute: 'contribution',
+  summary: 'summary',
 };
 
 const WELCOME: Record<string, string> = {
-  onboarding: '👋 欢迎加入 ModelScope 开源社区！\n\n我是你的新手导航助手，可以帮你了解 ModelScope 平台的核心功能、社区规范与最佳实践。',
-  recommend: '🎯 我是你的模型推荐助手！\n\n根据你的任务需求，我会从 ModelScope 平台海量模型中为你推荐最合适的选择。',
-  contribute: '🚀 我是你的贡献路线规划师！\n\n开源贡献不只是写代码，文档、Issue 维护、社区运营都是重要的参与方式。',
+  onboarding: '👋 欢迎来到魔搭社区！\n\n我是你的新手导航助手。请告诉我你的技术栈和参与目标，我会按「模型体验→Notebook工坊→发布创空间→社区贡献」全流程为你规划入门路线。\n\n💡 点击下方「🎬 演示」查看示例。',
+  recommend: '🎯 我是你的模型推荐助手！\n\n请描述任务需求与硬件条件，我会从魔搭模型库中推荐最合适的模型，并附推理代码、一键Notebook入口与发布到创空间的规范。\n\n💡 点击下方「🎬 演示」查看示例。',
+  contribute: '🚀 我是你的贡献路线规划师！\n\n请告诉我你的技术栈与可用时间，我会匹配魔搭社区的新手 Issue，生成 PR 描述模板与提交校验清单。\n\n💡 点击下方「🎬 演示」查看示例。',
+  summary: '📋 我是社区议题分析师！\n\n请提供魔搭 GitHub Issue/Discussion 链接或内容，我会按「核心诉求/环境信息/争议分歧/当前进展/待决策事项」生成结构化摘要。\n\n💡 点击下方「🎬 演示」查看示例。',
+};
+
+const DEMOS: Record<string, { label: string; question: string }> = {
+  onboarding: { label: '🎬 演示：前端新手入门', question: '我是前端开发者，第一次来 ModelScope，想参与社区贡献，给我入门路径' },
+  recommend: { label: '🎬 演示：老照片修复推荐', question: '我需要做老照片修复，适配西湖老影像数字化场景，推荐合适的模型' },
+  contribute: { label: '🎬 演示：新手贡献规划', question: '我熟悉 Python，每周 3 小时，想参与 modelscope/swift 仓库的文档贡献，帮我匹配 Issue' },
+  summary: { label: '🎬 演示：部署报错摘要', question: '给我一个模型部署报错 Issue 的摘要示例' },
 };
 
 async function callAPI(mode: string, question: string): Promise<string> {
@@ -30,12 +40,14 @@ const FEATURE_META: Record<string, { label: string; gradient: string; icon: stri
   onboarding: { label: '新手导航', gradient: 'from-indigo-500 to-purple-600', icon: '🧭' },
   recommend: { label: '模型推荐', gradient: 'from-cyan-400 to-teal-500', icon: '🧠' },
   contribute: { label: '贡献规划', gradient: 'from-purple-400 to-pink-500', icon: '🚀' },
+  summary: { label: '议题摘要', gradient: 'from-amber-400 to-orange-500', icon: '📋' },
 };
 
 const QUICK_REPLIES: Record<string, string[]> = {
-  onboarding: ['如何注册？', '学习路径', '社区规范', '活动推荐'],
+  onboarding: ['我是 Python 新手', '我想参与代码贡献', '我想发布模型'],
   recommend: ['图像分类', '文本生成', '语音识别', '多模态模型'],
   contribute: ['文档贡献', '代码贡献', 'Issue 维护', '社区运营'],
+  summary: ['分析 Issue', '分析 Discussion', '社区动态简报'],
 };
 
 function Markdown({ text }: { text: string }) {
@@ -95,10 +107,10 @@ function ChatConversation({ feature, meta }: {
   };
 
   const selectScenario = (keyword: string) => {
-    setMessages([{ role: 'assistant', content: '...' }]);
+    setMessages([{ role: 'user', content: keyword }, { role: 'assistant', content: '...' }]);
     setLoading(true);
     callAPI(MODE_MAP[feature], keyword).then(answer => {
-      setMessages([{ role: 'assistant', content: answer }]);
+      setMessages([{ role: 'user', content: keyword }, { role: 'assistant', content: answer }]);
       setLoading(false);
     });
   };
@@ -158,6 +170,11 @@ function ChatConversation({ feature, meta }: {
           </div>
         )}
         <div />
+        {messages.length > 0 && !loading && (
+          <div className="px-6 pb-2">
+            <Feedback feature={feature} question={messages.find(m => m.role === 'user')?.content || ''} />
+          </div>
+        )}
       </div>
 
       <div className="px-6 pt-5 pb-4 border-t border-white/[0.04] bg-[#0b1424]/60">
@@ -175,6 +192,17 @@ function ChatConversation({ feature, meta }: {
             {qr}
           </button>
         ))}
+        {DEMOS[feature] && (
+          <button
+            type="button"
+            onClick={() => selectScenario(DEMOS[feature].question)}
+            className="px-3 py-1.5 rounded-lg border border-indigo-400/20 bg-indigo-400/[0.06] text-[11px] text-indigo-300
+              hover:text-indigo-200 hover:border-indigo-400/40 hover:bg-indigo-400/[0.1]
+              active:scale-95 transition-all duration-200 cursor-pointer"
+          >
+            {DEMOS[feature].label}
+          </button>
+        )}
         </div>
       </div>
 
