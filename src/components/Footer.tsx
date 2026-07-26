@@ -20,9 +20,7 @@ export default function Footer() {
         {/* Brand */}
         <div className="flex flex-col items-center gap-3 mb-8">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center text-white font-extrabold text-sm">
-              MS
-            </div>
+            <img src="/logo.png" alt="ModelScope" className="w-8 h-8 rounded-lg" />
             <span className="font-bold text-lg text-white">
               ModelScope <span className="text-indigo-400">Copilot</span>
             </span>
