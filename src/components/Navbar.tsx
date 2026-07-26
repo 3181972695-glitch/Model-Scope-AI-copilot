@@ -55,9 +55,7 @@ export default function Navbar() {
           onClick={() => jumpTo('项目介绍')}
           className="flex items-center gap-3 group cursor-pointer"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center text-white font-extrabold text-sm shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
-            MS
-          </div>
+          <img src="/logo.png" alt="ModelScope" className="w-8 h-8 rounded-lg group-hover:scale-105 transition-transform" />
           <span className="font-bold text-lg text-white tracking-tight">
             ModelScope <span className="text-indigo-400">Copilot</span>
           </span>

@@ -38,6 +38,8 @@ export default function Hero() {
           AI Creation Workshop 2026
         </div>
 
+        <img src="/logo.png" alt="ModelScope" className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-lg" />
+
         {/* Heading — explicit full-width centering */}
         <h1 className="w-full text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-10 leading-tight">
           <span className="text-white">ModelScope </span>
