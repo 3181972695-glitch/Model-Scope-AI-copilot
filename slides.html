@@ -3,244 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ModelScope AI Community Copilot — AI 创作工坊 2026</title>
+<title>ModelScope AI Community Copilot</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#050a16;color:#f1f5f9;overflow:hidden;height:100vh}
 .slides{width:100%;height:100vh;position:relative}
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 60px;opacity:0;transition:opacity .5s;pointer-events:none;overflow-y:auto}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 80px;opacity:0;transition:opacity .5s;pointer-events:none;overflow-y:auto}
 .slide.active{opacity:1;pointer-events:auto}
-.slide h1{font-size:52px;font-weight:800;text-align:center;margin-bottom:12px;letter-spacing:-1px}
+.slide h1{font-size:56px;font-weight:800;text-align:center;margin-bottom:16px;letter-spacing:-1px}
 .slide h1 span{background:linear-gradient(135deg,#fff,#a0c4ff,#165DFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.slide h2{font-size:28px;font-weight:700;margin-bottom:20px;color:#e2e8f0;text-align:center}
-.badge{display:inline-block;padding:6px 18px;border-radius:99px;border:1px solid rgba(22,93,255,.3);background:rgba(22,93,255,.06);color:#a0c4ff;font-size:13px;margin-bottom:16px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:1100px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;width:100%;max-width:1000px;margin-top:16px}
-.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:100%;max-width:1100px;margin-top:16px}
-.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:20px;transition:.2s;text-align:center}
-.card .icon{font-size:32px;margin-bottom:8px}
-.card h3{font-size:16px;font-weight:700;margin-bottom:4px}
-.card p{font-size:12px;color:#94a3b8;line-height:1.5}
-.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;font-size:13px;color:#64748b;margin:20px 0}
-.flow span{padding:8px 16px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
-.flow .ar{border:none;background:none;font-size:18px;color:#475569}
-.nav{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;z-index:10}
-.nav button{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#94a3b8;font-size:16px;cursor:pointer;transition:.2s}
+.slide h2{font-size:30px;font-weight:700;margin-bottom:20px;color:#e2e8f0;text-align:center}
+.badge{display:inline-block;padding:6px 18px;border-radius:99px;border:1px solid rgba(22,93,255,.3);background:rgba(22,93,255,.06);color:#a0c4ff;font-size:13px;margin-bottom:20px}
+.grid{display:grid;gap:16px;width:100%;max-width:1000px}
+.grid2{grid-template-columns:1fr 1fr}
+.grid3{grid-template-columns:1fr 1fr 1fr}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:28px;text-align:center;transition:.2s}
+.card .icon{font-size:40px;margin-bottom:12px}
+.card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.card p{font-size:14px;color:#94a3b8;line-height:1.6}
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;font-size:15px;margin:24px 0}
+.flow .step{padding:14px 24px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center;min-width:120px}
+.flow .step .lbl{font-size:13px;color:#94a3b8;margin-top:4px}
+.flow .ar{font-size:22px;color:#475569;border:none;background:none}
+.nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;z-index:10}
+.nav button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#94a3b8;font-size:18px;cursor:pointer;transition:.2s}
 .nav button:hover{background:rgba(255,255,255,.1);color:#fff}
-.nav .dots{display:flex;gap:6px}
+.nav .dots{display:flex;gap:8px}
 .nav .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);cursor:pointer;transition:.3s}
 .nav .dot.active{background:#165DFF;box-shadow:0 0 8px rgba(22,93,255,.5)}
-.num{position:fixed;top:20px;right:28px;font-size:13px;color:#475569;z-index:10}
-.bg-orb{position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
-.bg-orb.l{top:-200px;left:-200px;background:rgba(22,93,255,.05)}
-.bg-orb.r{bottom:-200px;right:-200px;background:rgba(6,182,212,.03)}
-
-/* Chat Demo */
-.chat-box{border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;width:100%;max-width:700px;background:rgba(0,0,0,.2)}
-.chat-header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.3)}
-.chat-header .avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#165DFF,#4080FF);display:flex;align-items:center;justify-content:center;font-size:16px}
-.chat-body{padding:16px;max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;font-size:13px}
-.msg{display:flex;gap:8px;align-items:flex-start}
-.msg .av{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.msg .av.ai{background:linear-gradient(135deg,#165DFF,#4080FF)}
-.msg .av.user{background:#334155}
-.msg .bub{padding:8px 12px;border-radius:12px;line-height:1.6;max-width:90%}
-.msg.ai .bub{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-top-left-radius:4px}
-.msg.user .bub{background:rgba(22,93,255,.1);border:1px solid rgba(22,93,255,.1);border-top-right-radius:4px;margin-left:auto}
-
-/* Health viz */
-.health-card{width:100%;max-width:700px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:24px}
-.health-top{display:flex;align-items:center;gap:24px;margin-bottom:20px}
-.score-ring{position:relative;width:80px;height:80px;flex-shrink:0}
-.score-ring svg{transform:rotate(-90deg)}
-.score-ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800}
-.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.dim{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:14px}
-.dim .bar{height:6px;border-radius:3px;background:rgba(255,255,255,.06);margin:8px 0;overflow:hidden}
-.dim .bar-fill{height:100%;border-radius:3px;transition:width 1s}
-.sug-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.sug{display:flex;gap:10px;align-items:flex-start;font-size:12px}
-.sug .p{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-.sug .p.p1{background:rgba(239,68,68,.15);color:#ef4444}
-.sug .p.p2{background:rgba(245,158,11,.15);color:#f59e0b}
-.sug .p.p3{background:rgba(22,93,255,.15);color:#165DFF}
-
-/* Demo Btn */
-.demo-btn{padding:10px 24px;border-radius:12px;border:1px solid rgba(22,93,255,.3);background:rgba(22,93,255,.08);color:#a0c4ff;font-size:14px;cursor:pointer;transition:.2s;margin-top:12px}
-.demo-btn:hover{background:rgba(22,93,255,.15);border-color:rgba(22,93,255,.5)}
-pre{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 18px;font-size:13px;color:#a0c4ff;line-height:1.6;text-align:left;max-width:700px;width:100%;overflow-x:auto}
-.prompt-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;margin-right:4px}
-.prompt-tag.sys{background:rgba(22,93,255,.15);color:#a0c4ff}
-.prompt-tag.usr{background:rgba(34,197,94,.15);color:#86efac}
-.prompt-tag.ai{background:rgba(168,85,247,.15);color:#c084fc}
+.num{position:fixed;top:24px;right:32px;font-size:13px;color:#475569;z-index:10}
+.bg-orb{position:fixed;width:700px;height:700px;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.bg-orb.l{top:-250px;left:-250px;background:rgba(22,93,255,.04)}
+.bg-orb.r{bottom:-250px;right:-250px;background:rgba(6,182,212,.03)}
+.quote{font-size:18px;color:#64748b;font-style:italic;max-width:700px;text-align:center;line-height:1.8;margin:20px 0}
+.quote strong{color:#a0c4ff;font-style:normal}
+.link{display:inline-block;padding:10px 24px;border-radius:12px;border:1px solid rgba(22,93,255,.2);background:rgba(22,93,255,.06);color:#a0c4ff;font-size:14px;text-decoration:none;margin:8px;transition:.2s}
+.link:hover{background:rgba(22,93,255,.12);border-color:rgba(22,93,255,.4)}
 </style>
 </head>
 <body>
-<div class="bg-orb l"></div>
-<div class="bg-orb r"></div>
-<div class="num" id="num">1 / 8</div>
+<div class="bg-orb l"></div><div class="bg-orb r"></div>
+<div class="num" id="num">1 / 6</div>
 
 <div class="slides" id="slides">
 
-<!-- ====== Slide 1: Title ====== -->
+<!-- ====== 1. 标题 ====== -->
 <div class="slide active">
 <div class="badge">AI 创作工坊 2026 · 主题一「AI + 开源社区生态」</div>
 <h1><span>ModelScope<br>AI Community Copilot</span></h1>
-<p style="font-size:18px;color:#94a3b8;max-width:600px;text-align:center">魔搭社区智能助手 — AI 驱动开源社区生态，降低参与门槛，加速协作效率</p>
+<p style="font-size:20px;color:#94a3b8;text-align:center">让 AI 成为开源社区的桥梁，<br>降低每个人参与的门槛</p>
 </div>
 
-<!-- ====== Slide 2: 核心交互演示 — 新手导航 ====== -->
+<!-- ====== 2. 问题 ====== -->
 <div class="slide">
-<h2>🧭 核心演示：新手导航</h2>
-<p style="font-size:14px;color:#64748b;margin-bottom:12px">输入技术栈 → AI 生成分阶段入门清单 + Good First Issue 入口</p>
-<div class="chat-box" id="chat1">
-<div class="chat-header"><div class="avatar">🤖</div><span style="font-size:13px;font-weight:600">Copilot · 新手导航</span></div>
-<div class="chat-body" id="chatBody1">
-<div class="msg ai"><div class="av ai">🤖</div><div class="bub">👋 我是新手导航助手。我是前端开发者，第一次来魔搭社区，想参与社区贡献，给我入门路径</div></div>
-<div class="msg user"><div class="av user">👤</div><div class="bub">我是前端开发者，第一次来魔搭社区，想参与社区贡献</div></div>
-<div class="msg ai"><div class="av ai">🤖</div><div class="bub">
-<strong>🧭 分阶段入门路线</strong><br><br>
-<b>第1周：模型体验</b><br>→ 注册魔搭账号 → 浏览模型库 → 在线运行 1 个 Demo<br>📎 modelscope.cn<br><br>
-<b>第2-4周：上手实践</b><br>→ 学习 SWIFT 微调 → 在 Notebook 工坊完成首次微调<br>📎 github.com/modelscope/swift<br><br>
-<b>第1-3月：社区贡献</b><br>→ 认领 Good First Issue → 提交首个 PR → 签署 CLA<br>📎 github.com/modelscope/modelscope/issues?q=label:"good+first+issue"
-</div></div>
+<h2>开源社区的现实困境</h2>
+<div class="grid grid3">
+<div class="card"><div class="icon">🚪</div><h3>入门难</h3><p>30 万+ 模型、500+ 组织，新人不知道该从哪开始。找不到适合自己的第一个任务。</p></div>
+<div class="card"><div class="icon">📉</div><h3>留存低</h3><p>大多数注册用户从未提交过 PR。缺乏分阶段引导，热情在摸索中消磨。</p></div>
+<div class="card"><div class="icon">💬</div><h3>协作慢</h3><p>Issue 讨论冗长，关键信息淹没在评论中。维护者疲于重复回答相同问题。</p></div>
 </div>
+<p class="quote">这些问题不是技术问题，是<strong>社区体验</strong>问题。</p>
+</div>
+
+<!-- ====== 3. 方案 ====== -->
+<div class="slide">
+<h2>用 AI 构建社区的「数字桥梁」</h2>
+<div class="flow">
+<div class="step"><div style="font-size:28px">🧭</div>新人导航<div class="lbl">分阶段入门路径<br>从零到首次 PR</div></div><span class="ar">→</span>
+<div class="step"><div style="font-size:28px">🧠</div>模型推荐<div class="lbl">精准选型 + 推理代码<br>加速项目落地</div></div><span class="ar">→</span>
+<div class="step"><div style="font-size:28px">🚀</div>贡献规划<div class="lbl">Issue 智能匹配<br>降低首次贡献门槛</div></div><span class="ar">→</span>
+<div class="step"><div style="font-size:28px">📋</div>议题摘要<div class="lbl">压缩讨论沟通成本<br>提升协作效率</div></div><span class="ar">→</span>
+<div class="step" style="background:rgba(22,93,255,.08);border-color:rgba(22,93,255,.2)"><div style="font-size:28px">📊</div>健康诊断<div class="lbl">量化项目健康度<br>引导持续改进</div></div>
+</div>
+<p style="font-size:16px;color:#94a3b8;text-align:center;margin-top:24px">服务 <strong style="color:#fff">新人开发者</strong> · <strong style="color:#fff">普通贡献者</strong> · <strong style="color:#fff">项目维护者</strong> 三类人群</p>
+</div>
+
+<!-- ====== 4. 社区正向循环 ====== -->
+<div class="slide">
+<h2>核心意义：激活社区正向循环</h2>
+<div class="flow" style="flex-direction:column;align-items:center;gap:14px">
+<div class="step" style="width:280px"><div style="font-size:24px">🌱</div>新人入门 降门槛<div class="lbl">分阶段路径 + Good First Issue 匹配</div></div>
+<span class="ar">⬇</span>
+<div class="step" style="width:280px"><div style="font-size:24px">⚡</div>项目落地 提效率<div class="lbl">模型推荐 + 推理代码 + 创空间发布</div></div>
+<span class="ar">⬇</span>
+<div class="step" style="width:280px"><div style="font-size:24px">🔧</div>贡献产出 提质量<div class="lbl">Issue 匹配 + PR 模板 + CLA 校验</div></div>
+<span class="ar">⬇</span>
+<div class="step" style="width:280px"><div style="font-size:24px">💬</div>协作沟通 降成本<div class="lbl">议题摘要 + 结构化讨论分析</div></div>
+<span class="ar">⬇</span>
+<div class="step" style="width:280px;background:rgba(22,93,255,.08);border-color:rgba(22,93,255,.2)"><div style="font-size:24px">🔥</div><strong>社区活力 整体提升</strong><div class="lbl">更多人参与 → 更多贡献 → 更好的生态</div></div>
 </div>
 </div>
 
-<!-- ====== Slide 3: 模型推荐演示 ====== -->
+<!-- ====== 5. 演示 ====== -->
 <div class="slide">
-<h2>🧠 核心演示：模型推荐</h2>
-<p style="font-size:14px;color:#64748b;margin-bottom:12px">描述需求 → 推荐模型 + 推理代码 + 创空间发布模板</p>
-<div class="grid2">
-<div class="chat-box" style="max-width:100%">
-<div class="chat-header"><div class="avatar">🤖</div><span style="font-size:12px">Copilot · 模型推荐</span></div>
-<div class="chat-body">
-<div class="msg user"><div class="av user">👤</div><div class="bub">老照片修复，适配西湖老影像，推荐合适模型</div></div>
-<div class="msg ai"><div class="av ai">🤖</div><div class="bub">
-<strong>📸 推荐：Bringing-Old-Photos-Back-to-Life</strong><br>
-| 模型卡片 | modelscope.cn/models/xxx |<br>
-| 参数量 | 150M |<br>
-| 适用 | 老照片划痕修复+上色 |<br><br>
-<strong>推理代码：</strong><br>
-<code style="font-size:10px">from modelscope.pipelines import pipeline<br>pipe = pipeline('old-photo-restoration')<br>result = pipe('input.jpg')</code>
-</div></div>
-</div>
+<h2>现场演示：AI 如何降低社区门槛</h2>
+<div class="grid grid3" style="text-align:left">
+<div class="card" style="text-align:left">
+<div class="icon">🧭</div><h3>新手导航</h3>
+<p>输入「我是前端开发者，第一次来魔搭社区」</p>
+<p style="color:#a0c4ff;margin-top:8px">→ AI 输出 3 阶段入门清单<br>→ 匹配 Good First Issue 入口<br>→ 提供 PR 提交步骤指引</p>
 </div>
 <div class="card" style="text-align:left">
-<h3>📤 成果反哺社区</h3>
-<p style="font-size:12px">项目完成后发布到魔搭：</p>
-<p style="font-size:11px;color:#64748b;margin-top:8px">→ 上传至<b>模型库</b><br>modelscope.cn/models/upload<br><br>→ 部署为<b>创空间</b><br>支持 Gradio/Streamlit<br><br>→ 你的成果帮助更多开发者！</p>
-</div>
-</div>
-</div>
-
-<!-- ====== Slide 4: 贡献规划演示 ====== -->
-<div class="slide">
-<h2>🚀 核心演示：贡献规划</h2>
-<p style="font-size:14px;color:#64748b;margin-bottom:12px">输入技能+时间 → Issue 智能匹配 + PR 模板 + CLA 校验</p>
-<div class="chat-box">
-<div class="chat-header"><div class="avatar">🤖</div><span style="font-size:12px">Copilot · 贡献规划</span></div>
-<div class="chat-body">
-<div class="msg user"><div class="av user">👤</div><div class="bub">Python，每周3小时，参与 swift 文档贡献</div></div>
-<div class="msg ai"><div class="av ai">🤖</div><div class="bub">
-<strong>📋 Issue 匹配</strong><br>
-| Issue | 仓库 | 难度 | 耗时 |<br>
-|#247 文档汉化 | swift | ⭐ | 2h |<br>
-|#312 API文档 | swift | ⭐⭐ | 3h |<br><br>
-<strong>📝 PR 模板</strong><br>
-<code style="font-size:10px">## 关联 Issue<br>Fixes #247<br>## 改动说明<br>汉化 README 核心章节<br>## 测试<br>- [x] 本地预览通过</code><br><br>
-<strong>✅ 校验清单</strong><br>☑ CLA 签署 ☑ commit 格式(fix/docs) ☑ PR关联Issue
-</div></div>
-</div>
-</div>
-</div>
-
-<!-- ====== Slide 5: 健康度诊断可视化 ====== -->
-<div class="slide">
-<h2>📊 核心演示：项目健康度诊断</h2>
-<p style="font-size:14px;color:#64748b;margin-bottom:12px">4 维度量化评估 + SVG 可视化 + P1/P2/P3 治理建议</p>
-<div class="health-card">
-<div class="health-top">
-<div class="score-ring"><svg width="80" height="80" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="3"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="68 97.4" stroke-linecap="round"/></svg><div class="val">72</div></div>
-<div><h3 style="margin:0">综合健康度 <span style="color:#f59e0b">良好</span></h3><p style="font-size:12px;color:#64748b">基于 ModelScope 社区标准</p></div>
-</div>
-<div class="dim-grid">
-<div class="dim"><div style="display:flex;justify-content:space-between;font-size:12px"><strong>贡献活跃度</strong><span style="color:#22c55e">75 良好</span></div><div class="bar"><div class="bar-fill" style="width:75%;background:#22c55e"></div></div><p style="font-size:10px;color:#64748b">每周8次提交，3位活跃贡献者</p></div>
-<div class="dim"><div style="display:flex;justify-content:space-between;font-size:12px"><strong>Issue响应效率</strong><span style="color:#f59e0b">60 一般</span></div><div class="bar"><div class="bar-fill" style="width:60%;background:#f59e0b"></div></div><p style="font-size:10px;color:#64748b">平均响应2天，15%超30天未解决</p></div>
-<div class="dim"><div style="display:flex;justify-content:space-between;font-size:12px"><strong>文档完善度</strong><span style="color:#22c55e">85 优秀</span></div><div class="bar"><div class="bar-fill" style="width:85%;background:#22c55e"></div></div><p style="font-size:10px;color:#64748b">README+API文档+示例代码齐全</p></div>
-<div class="dim"><div style="display:flex;justify-content:space-between;font-size:12px"><strong>新人友好度</strong><span style="color:#f59e0b">68 一般</span></div><div class="bar"><div class="bar-fill" style="width:68%;background:#f59e0b"></div></div><p style="font-size:10px;color:#64748b">有Good First Issue，缺新手教程</p></div>
-</div>
-<div class="sug-list">
-<div class="sug"><span class="p p1">P1</span><div><strong style="font-size:12px">建立 Issue 响应 SLA</strong><p style="font-size:10px;color:#64748b">48小时首次响应目标，issue-bot自动打标签</p></div></div>
-<div class="sug"><span class="p p2">P2</span><div><strong style="font-size:12px">补充新手入门文档</strong><p style="font-size:10px;color:#64748b">新增 CONTRIBUTING_CN.md 关联魔搭新手教程</p></div></div>
-<div class="sug"><span class="p p3">P3</span><div><strong style="font-size:12px">定期社区同步会</strong><p style="font-size:10px;color:#64748b">每两周线上 Office Hour 同步进展收集反馈</p></div></div>
-</div>
-</div>
-</div>
-
-<!-- ====== Slide 6: Prompt 工程 ====== -->
-<div class="slide">
-<h2>🔧 System Prompt 设计</h2>
-<div class="grid2">
-<div class="card" style="text-align:left">
-<h3 style="color:#a0c4ff;margin-bottom:8px">术语统一 + 规则内置</h3>
-<pre style="font-size:11px;max-width:100%"><span class="prompt-tag sys">SYS</span> 术语强制：创空间/模型库/Notebook工坊
-<span class="prompt-tag sys">SYS</span> 规则内置：CLA签署+PR流程+Issue标签
-<span class="prompt-tag sys">SYS</span> 溯源要求：标注官方文档路径
-<span class="prompt-tag sys">SYS</span> 边界声明：不确定标「以官方文档为准」</pre>
+<div class="icon">🧠</div><h3>模型推荐</h3>
+<p>输入「老照片修复，西湖老影像数字化」</p>
+<p style="color:#a0c4ff;margin-top:8px">→ 推荐最匹配的预训练模型<br>→ 附推理代码片段<br>→ 引导发布到魔搭创空间</p>
 </div>
 <div class="card" style="text-align:left">
-<h3 style="color:#a0c4ff;margin-bottom:8px">5 场景独立 Prompt</h3>
-<pre style="font-size:11px;max-width:100%"><span class="prompt-tag sys">SYS</span> beginner → 分阶段任务清单
-<span class="prompt-tag sys">SYS</span> model → 模型卡片+代码+发布模板
-<span class="prompt-tag sys">SYS</span> contribution → Issue匹配+PR模板
-<span class="prompt-tag sys">SYS</span> summary → 四栏结构化摘要
-<span class="prompt-tag sys">SYS</span> health_check → 强制JSON输出</pre>
-</div>
-</div>
-<div style="margin-top:16px;text-align:center;font-size:13px;color:#64748b">
-每个回答末尾自动追加 <strong style="color:#a0c4ff">成果回流引导</strong>，鼓励用户将成果发布到魔搭社区
-</div>
-</div>
-
-<!-- ====== Slide 7: 架构 + 正向循环 ====== -->
-<div class="slide">
-<h2>🏗 技术架构 & 社区正向循环</h2>
-<div class="grid2">
-<pre style="font-size:13px;max-width:100%">浏览器 (React 19 + TypeScript + Tailwind)
-    │  POST /api/chat
-    ▼
-FastAPI + Pydantic (Python)
-    │  OpenAI SDK 异步调用
-    ▼
-DeepSeek V4 Pro (deepseek-v4-pro)
-    │  System Prompt 驱动结构化输出
-    ▼
-前端结构化渲染 (SVG + 进度条 + 卡片)
-    │  零第三方图表库，纯 Tailwind CSS</pre>
-<div>
-<div class="flow" style="flex-direction:column;align-items:flex-start;gap:6px">
-<span style="width:100%;text-align:center">新人入门 降门槛</span><span class="ar" style="text-align:center;width:100%">↓</span>
-<span style="width:100%;text-align:center">项目落地 提效率</span><span class="ar" style="text-align:center;width:100%">↓</span>
-<span style="width:100%;text-align:center">贡献产出 提质量</span><span class="ar" style="text-align:center;width:100%">↓</span>
-<span style="width:100%;text-align:center">协作沟通 降成本</span><span class="ar" style="text-align:center;width:100%">↓</span>
-<span style="width:100%;text-align:center;background:rgba(22,93,255,.1);border-color:rgba(22,93,255,.3);color:#a0c4ff">社区活力 整体提升</span>
-</div>
+<div class="icon">📊</div><h3>健康度诊断</h3>
+<p>输入「帮我诊断 CV 模型项目健康度」</p>
+<p style="color:#a0c4ff;margin-top:8px">→ 4 维度量化评分<br>→ SVG 可视化仪表盘<br>→ P1/P2/P3 改进建议</p>
 </div>
 </div>
 </div>
 
-<!-- ====== Slide 8: AI 披露 + 致谢 ====== -->
+<!-- ====== 6. 结语 ====== -->
 <div class="slide">
-<h1><span>谢谢！</span></h1>
-<div class="grid2" style="margin-top:20px;max-width:800px">
-<div class="card" style="text-align:left"><h3 style="color:#a0c4ff">Copilot 对话 AI</h3><p style="font-size:12px">DeepSeek V4 Pro · 5 独立 Prompt · FastAPI 异步调用</p></div>
-<div class="card" style="text-align:left"><h3 style="color:#a0c4ff">AI 辅助开发</h3><p style="font-size:12px">React 组件 / FastAPI / Prompt / 文案 — 全部人工审查</p></div>
+<h1><span>让社区因 AI 而更有温度</span></h1>
+<p class="quote">
+开源社区的活力不在于代码的数量，而在于<strong>每个人都能找到参与的方式</strong>。<br>
+AI 不是替代人，而是<strong>连接人</strong>——连接需求与资源，连接问题与答案，连接热情与机会。
+</p>
+<div style="margin-top:24px;text-align:center">
+<a href="https://github.com/3181972695-glitch/Model-Scope-AI-copilot" class="link" target="_blank">📂 GitHub 完整源码</a>
+<a href="https://3181972695-glitch.github.io/Model-Scope-AI-copilot" class="link" target="_blank">🌐 在线体验</a>
 </div>
-<p style="margin-top:16px;font-size:14px;color:#64748b">AI 创作工坊 2026 · 主题一「AI + 开源社区生态」</p>
-<p style="font-size:13px;color:#475569">源码：github.com/3181972695-glitch/Model-Scope-AI-copilot</p>
-<p style="font-size:13px;color:#475569">在线体验：3181972695-glitch.github.io/Model-Scope-AI-copilot</p>
+<p style="margin-top:20px;font-size:14px;color:#475569">AI 创作工坊 2026 · 主题一「AI + 开源社区生态」</p>
 </div>
 
 </div>
@@ -252,11 +139,11 @@ DeepSeek V4 Pro (deepseek-v4-pro)
 </div>
 
 <script>
-let current=0;const slides=document.querySelectorAll('.slide'),total=slides.length,dotsEl=document.getElementById('dots'),numEl=document.getElementById('num');
-for(let i=0;i<total;i++){const d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=()=>go(i);dotsEl.appendChild(d)}
-function go(i){slides[current].classList.remove('active');dotsEl.children[current].classList.remove('active');current=(i+total)%total;slides[current].classList.add('active');dotsEl.children[current].classList.add('active');numEl.textContent=(current+1)+' / '+total}
-function next(){go(current+1)}function prev(){go(current-1)}
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft'){e.preventDefault();prev()}});
+let c=0;const s=document.querySelectorAll('.slide'),t=s.length,d=document.getElementById('dots'),n=document.getElementById('num');
+for(let i=0;i<t;i++){const o=document.createElement('span');o.className='dot'+(i===0?' active':'');o.onclick=()=>g(i);d.appendChild(o)}
+function g(i){s[c].classList.remove('active');d.children[c].classList.remove('active');c=(i+t)%t;s[c].classList.add('active');d.children[c].classList.add('active');n.textContent=(c+1)+' / '+t}
+function next(){g(c+1)}function prev(){g(c-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft'){e.preventDefault();prev()}})
 </script>
 </body>
 </html>
