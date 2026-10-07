@@ -19,10 +19,12 @@
 
 html {
   scroll-padding-top: 6rem; /* 96px — 防止 anchor 跳转时被 fixed navbar 遮挡 */
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', system-ui, sans-serif;
   background:
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(22,93,255,0.08), transparent),
     radial-gradient(ellipse 60% 40% at 20% 80%, rgba(22,93,255,0.04), transparent),
@@ -33,11 +35,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Keyboard focus — visible but unobtrusive ── */
+:focus-visible {
+  outline: 2px solid rgba(129, 140, 248, 0.7);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #334155; border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ── Reduced motion — respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
 /* ── Keyframes ── */
 @keyframes fadeInUp {
@@ -108,6 +129,12 @@ body {
 .stagger > *:nth-child(4) { animation-delay: 0.2s; }
 .stagger > *:nth-child(5) { animation-delay: 0.25s; }
 
+@media (prefers-reduced-motion: reduce) {
+  .stagger > * {
+    opacity: 1;
+  }
+}
+
 /* ── Background patterns ── */
 .bg-grid {
   background-image:
@@ -153,19 +180,19 @@ nav {
 }
 /* Chat demo */
 .section-demo {
-  padding-top: 128px;
-  padding-bottom: 128px;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 /* AI disclosure */
 .section-disclosure {
-  padding-top: 112px;
-  padding-bottom: 128px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 @media (max-width: 768px) {
   .section-hero       { padding-top: 80px; padding-bottom: 80px; }
   .section-features    { padding-top: 60px; padding-bottom: 80px; }
-  .section-demo        { padding-top: 80px;  padding-bottom: 80px; }
-  .section-disclosure  { padding-top: 80px;  padding-bottom: 80px; }
+  .section-demo        { padding-top: 60px;  padding-bottom: 60px; }
+  .section-disclosure  { padding-top: 60px;  padding-bottom: 60px; }
 }
 
 /* ── Glass card ── */
@@ -181,6 +208,28 @@ nav {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ── Hero entrance animations ── */
+.hero-enter {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-enter-delay-1 { animation-delay: 0.1s; }
+.hero-enter-delay-2 { animation-delay: 0.2s; }
+.hero-enter-delay-3 { animation-delay: 0.3s; }
+.hero-enter-delay-4 { animation-delay: 0.45s; }
+.hero-enter-delay-5 { animation-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter,
+  .hero-enter-delay-1,
+  .hero-enter-delay-2,
+  .hero-enter-delay-3,
+  .hero-enter-delay-4,
+  .hero-enter-delay-5 {
+    opacity: 1;
+  }
 }
 
 /* ── Section divider ── */
@@ -210,19 +259,106 @@ nav {
   border-radius: 4px;
   font-size: 0.85em;
 }
+/* 宽表格在窄屏可横向滚动，避免撑破气泡 */
+.chat-content .table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.5em 0;
+  scrollbar-width: thin;
+}
+.chat-content .table-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+.chat-content .table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+.chat-content .table-wrap table {
+  margin: 0;
+  min-width: 360px;
+}
 .chat-content table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin: 0.5em 0;
   font-size: 0.8em;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 .chat-content th {
-  background: rgba(99, 102, 241, 0.12);
-  padding: 0.4em 0.6em;
+  background: rgba(255,255,255,0.08);
+  padding: 0.6em 0.75em;
   text-align: left;
-  font-weight: 600;
+  font-weight: 500;
+  color: #f1f5f9;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .chat-content td {
-  padding: 0.3em 0.6em;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 0.5em 0.75em;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
 }
+.chat-content tr:nth-child(even) td {
+  background: rgba(255,255,255,0.015);
+}
+.chat-content tbody tr:hover td {
+  background: rgba(255,255,255,0.03);
+}
+.chat-content a {
+  color: #818cf8;
+  text-decoration: none;
+}
+.chat-content a:hover {
+  text-decoration: underline;
+}
+.chat-content pre {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0.75rem;
+  padding: 0.75em 1em;
+  overflow-x: auto;
+  margin: 0.6em 0;
+}
+.chat-content .code-block {
+  position: relative;
+}
+.code-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #94a3b8;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  z-index: 1;
+}
+.code-block:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+.code-copy:hover {
+  color: #e2e8f0;
+  background: rgba(255,255,255,0.1);
+}
+.code-copy[data-copied="true"] {
+  color: #34d399;
+}
+.chat-content pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.82em;
+  color: #c7d2fe;
+  line-height: 1.6;
+}
+.chat-content h1 { font-size: 1.1rem; }
+.chat-content h2 { font-size: 1rem; }
+.chat-content h3 { font-size: 0.9rem; }
+.chat-content p { margin: 0.35em 0; line-height: 1.7; color: #cbd5e1; }

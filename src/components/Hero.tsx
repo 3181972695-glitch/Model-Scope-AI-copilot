@@ -1,8 +1,18 @@
 import { ArrowRight, Sparkles, ChevronDown, Bot, Cpu, GitBranch } from 'lucide-react';
+import { assetUrl } from '../lib/backend';
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  window.scrollTo({
+    top: el.getBoundingClientRect().top + window.scrollY - 64,
+    behavior: 'smooth',
+  });
+}
 
 export default function Hero() {
   return (
-    <section id="项目介绍" className="relative section section-hero min-h-screen overflow-hidden">
+    <section id="项目介绍" className="relative section section-hero min-h-screen overflow-hidden flex justify-center">
       {/* ── Background layers ── */}
       <div className="absolute inset-0 bg-grid" />
       <div className="absolute inset-0 bg-dots opacity-30" />
@@ -30,7 +40,7 @@ export default function Hero() {
       {/* ── Content: flex-col centering replaces the old flex+container-main conflict ── */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-10 max-w-[1280px] mx-auto">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-400/20 bg-indigo-400/[0.04] text-indigo-300/80 text-sm mb-10">
+        <div className="hero-enter inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-400/20 bg-indigo-400/[0.04] text-indigo-300/80 text-sm mb-10">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-400" />
@@ -38,28 +48,25 @@ export default function Hero() {
           AI Creation Workshop 2026
         </div>
 
-        <img src="/logo.png" alt="ModelScope" className="w-20 h-20 mx-auto mb-6 rounded-2xl shadow-lg" />
+        <img src={assetUrl('logo.png')} alt="ModelScope" className="hero-enter hero-enter-delay-1 w-20 h-20 mx-auto mb-6 rounded-2xl shadow-lg shadow-indigo-500/10" />
 
         {/* Heading — explicit full-width centering */}
-        <h1 className="w-full text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-10 leading-tight">
+        <h1 className="hero-enter hero-enter-delay-2 w-full text-center text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-10 leading-tight">
           <span className="text-white">ModelScope </span>
           <span className="gradient-text animate-gradient">AI Copilot</span>
         </h1>
 
         {/* Subtitle */}
-        <p className="w-full text-center text-lg md:text-xl text-slate-400/80 max-w-2xl mb-14 leading-loose">
+        <p className="hero-enter hero-enter-delay-3 w-full text-center text-lg md:text-xl text-slate-400/80 max-w-2xl mb-14 leading-loose">
           为 ModelScope 开源社区打造的智能助手 ——
           <br className="hidden sm:block" />
           用 AI 降低开源门槛，让每个人都能轻松参与模型开发与社区贡献
         </p>
 
         {/* CTA buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+        <div className="hero-enter hero-enter-delay-4 flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
           <button
-            onClick={() => {
-              const el = document.getElementById('功能');
-              if (el) document.documentElement.scrollTop = el.getBoundingClientRect().top + window.scrollY - 64;
-            }}
+            onClick={() => scrollToSection('功能')}
             className="group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold shadow-xl shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
           >
             <Sparkles size={20} className="group-hover:scale-110 transition-transform" />
@@ -67,10 +74,7 @@ export default function Hero() {
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
           <button
-            onClick={() => {
-              const el = document.getElementById('Demo');
-              if (el) document.documentElement.scrollTop = el.getBoundingClientRect().top + window.scrollY - 64;
-            }}
+            onClick={() => scrollToSection('Demo')}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/[0.08] text-slate-300 font-medium hover:bg-white/[0.04] hover:border-white/20 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
           >
             <Bot size={20} />
@@ -79,7 +83,7 @@ export default function Hero() {
         </div>
 
         {/* ── Community Value Dashboard ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-2xl mx-auto">
+        <div className="hero-enter hero-enter-delay-5 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-2xl mx-auto">
           {[
             { icon: '🧭', title: '新人入门', desc: '分阶段路径 + Good First Issue' },
             { icon: '🧠', title: '项目落地', desc: '模型推荐 + 代码 + 创空间' },

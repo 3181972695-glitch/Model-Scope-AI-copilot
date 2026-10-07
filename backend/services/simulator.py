@@ -4,13 +4,21 @@
 无匹配时返回 default 模板。
 """
 
-from data.responses import BEGINNER_RESPONSES, MODEL_RESPONSES, CONTRIBUTION_RESPONSES
+from data.responses import (
+    BEGINNER_RESPONSES,
+    CONTRIBUTION_RESPONSES,
+    HEALTH_RESPONSES,
+    MODEL_RESPONSES,
+    SUMMARY_RESPONSES,
+)
 
 
 _MODE_MAP = {
     "beginner": BEGINNER_RESPONSES,
     "model": MODEL_RESPONSES,
     "contribution": CONTRIBUTION_RESPONSES,
+    "summary": SUMMARY_RESPONSES,
+    "health_check": HEALTH_RESPONSES,
 }
 
 

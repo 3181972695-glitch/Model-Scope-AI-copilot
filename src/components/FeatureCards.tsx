@@ -118,19 +118,19 @@ export default function FeatureCards({ activeFeature, onSelect }: Props) {
 
                 {/* Card body */}
                 <div
-                  className={`relative h-full rounded-[24px] p-8 flex flex-col
+                  className={`relative h-full rounded-[24px] p-7 lg:p-8 flex flex-col
                     bg-gradient-to-b ${f.iconBg}
                     border ${isActive ? f.borderColor : 'border-white/[0.05]'}
                     ${isActive ? 'bg-[#0f1a2e]' : 'bg-[#0c1525]'}
                     transition-all duration-500`}
                 >
                   {/* Step number — top-right decorative */}
-                  <div className="flex items-center justify-end mb-4">
-                    <span className="text-[80px] font-black text-white/[0.03] select-none leading-none">
+                  <div className="relative flex items-center justify-end mb-4">
+                    <span className="text-[60px] lg:text-[72px] xl:text-[64px] 2xl:text-[80px] font-black text-white/[0.04] select-none leading-none">
                       {f.step}
                     </span>
                     {isActive && (
-                      <span className="absolute top-6 left-6 flex items-center gap-1.5 text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full animate-scale-in">
+                      <span className="absolute top-1 left-1 flex items-center gap-1.5 text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full animate-scale-in">
                         <Check size={12} />
                         已选中
                       </span>
@@ -174,7 +174,7 @@ export default function FeatureCards({ activeFeature, onSelect }: Props) {
                   <div
                     className={`inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 mx-auto
                       bg-gradient-to-r ${f.gradient} bg-clip-text text-transparent
-                      ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                      ${isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100'}`}
                   >
                     {isActive ? '对话中' : '开始体验'}
                     {!isActive && <ArrowRight size={15} />}

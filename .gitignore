@@ -3,3 +3,18 @@ dist/
 __pycache__/
 *.pyc
 .env
+
+# 系统与编辑器
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Python 虚拟环境与运行产物
+.venv/
+venv/
+*.log
+space_deploy/
+
+# 重复/临时配置文件
+* 2.ts

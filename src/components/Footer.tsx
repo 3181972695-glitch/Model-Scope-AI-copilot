@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { ExternalLink, Heart, Zap } from 'lucide-react';
 import { GithubIcon } from './Icons';
+import { fetchBackendMeta, assetUrl, prettyModel } from '../lib/backend';
 
 const LINKS = [
   { label: '项目介绍', id: '项目介绍' },
@@ -10,17 +12,34 @@ const LINKS = [
 
 function jumpTo(id: string) {
   const el = document.getElementById(id);
-  if (el) document.documentElement.scrollTop = el.getBoundingClientRect().top + window.scrollY - 64;
+  if (!el) return;
+  window.scrollTo({
+    top: el.getBoundingClientRect().top + window.scrollY - 64,
+    behavior: 'smooth',
+  });
 }
 
 export default function Footer() {
+  // 展示后端实际在用的模型，未探测到时不写死模型名
+  const [modelName, setModelName] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetchBackendMeta().then(meta => {
+      if (alive) setModelName(prettyModel(meta?.model));
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   return (
     <footer className="border-t border-white/[0.04] bg-[#040810]">
       <div className="container-main py-14 text-center">
         {/* Brand */}
         <div className="flex flex-col items-center gap-3 mb-8">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="ModelScope" className="w-8 h-8 rounded-lg" />
+            <img src={assetUrl('logo.png')} alt="ModelScope" className="w-8 h-8 rounded-lg" />
             <span className="font-bold text-lg text-white">
               ModelScope <span className="text-indigo-400">Copilot</span>
             </span>
@@ -62,7 +81,7 @@ export default function Footer() {
             </a>
             <span className="flex items-center gap-1">
               <Zap size={11} className="text-indigo-500" />
-              Powered by DeepSeek
+              Powered by {modelName ?? 'LLM'}
             </span>
             <span>© 2026 Copilot Team</span>
           </div>
